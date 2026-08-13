@@ -1,0 +1,11 @@
+[project]
+name = "chatgptgym"
+
+[ontology]
+source = "ggen/gymact-bridge-pack/ontology.ttl"
+
+[packs]
+gymact-bridge-pack = { path = "ggen/gymact-bridge-pack" }
+
+[templates]
+dir = "templates"

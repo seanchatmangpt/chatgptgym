@@ -24,10 +24,13 @@ jobs:
           ggen_bin="$(find /tmp/ggen-bin -type f -name ggen -perm -111 | head -n1)"
           echo "GGEN_BIN=$ggen_bin" >> "$GITHUB_ENV"
       - name: Generate twice and refuse non-idempotency
-        working-directory: ggen/gymact-bridge-pack
         run: |
+          set -euo pipefail
           "$GGEN_BIN" --version
           timeout 5s "$GGEN_BIN" sync run
-          cp -r generated /tmp/generated.first
+          mkdir -p /tmp/generated.first
+          cp src/chatgptgym_mcp_tools.rs src/chatgptgym_operation_catalog.rs /tmp/generated.first/
+          sha256sum /tmp/generated.first/chatgptgym_mcp_tools.rs /tmp/generated.first/chatgptgym_operation_catalog.rs
           timeout 5s "$GGEN_BIN" sync run
-          diff -r /tmp/generated.first generated
+          diff /tmp/generated.first/chatgptgym_mcp_tools.rs src/chatgptgym_mcp_tools.rs
+          diff /tmp/generated.first/chatgptgym_operation_catalog.rs src/chatgptgym_operation_catalog.rs
