@@ -1,0 +1,4 @@
+[pack]
+name = "chatgptgym-gymact-bridge-pack"
+version = "26.8.12"
+description = "GymAct consumer bridge pack for ChatGPTGym; manufactures Rust operation and MCP catalogs from admitted ChatGPTGym sosa:Procedure facts. Derived from GymAct consumer-bridge-pack-template at 5a40c8f402aeb14699e216e17b2ef7aae9f0bc8f."
