@@ -1,0 +1,78 @@
+{
+  "schema": "urn:chatgptgym:snapshot:v1",
+  "source": {
+    "kind": "sanitized-observation",
+    "scope": "non-secret reproducible cloud capability metadata",
+    "gymact_source_sha": "5a40c8f402aeb14699e216e17b2ef7aae9f0bc8f"
+  },
+  "runtime": {
+    "os": "Debian GNU/Linux 13",
+    "kernel": "Linux 6.18.35",
+    "architecture": "x86_64",
+    "cpu_count_observed": 5,
+    "working_artifact_zone": "/mnt/data",
+    "tools": {
+      "python": "3.13.5",
+      "node": "22.16.0",
+      "npm": "10.9.2",
+      "git": "2.47.3",
+      "cmake": "3.31.6",
+      "clang": "17.0.0",
+      "gcc": "14.2.0",
+      "make": "4.4.1",
+      "jq": "1.7",
+      "curl": "8.10.1",
+      "ripgrep": "14.1.1",
+      "uv": "0.10.0",
+      "pip": "25.1.1",
+      "java": "21.0.11",
+      "ruby": "3.3.8"
+    },
+    "unavailable_local_binaries": ["gh", "ggen", "rustc", "cargo", "terraform", "docker", "kubectl", "helm", "sqlite3"],
+    "transport_observations": [
+      "raw shell GitHub DNS unavailable in the observed capsule",
+      "authenticated GitHub connector available independently of raw shell network"
+    ]
+  },
+  "capability_catalog": [
+    {"id": "conversation-files", "consequence": "READ", "authority": "selected-user-content-only"},
+    {"id": "python-execution", "consequence": "DO", "authority": "bounded-local-capsule"},
+    {"id": "container-execution", "consequence": "DO", "authority": "bounded-local-capsule"},
+    {"id": "web-search-fetch", "consequence": "READ", "authority": "network-policy"},
+    {"id": "github-read", "consequence": "READ", "authority": "connector-scope"},
+    {"id": "github-write", "consequence": "DO", "authority": "explicit-user-scope"},
+    {"id": "gmail-read", "consequence": "READ", "authority": "connector-scope"},
+    {"id": "gmail-write", "consequence": "DO", "authority": "explicit-user-scope"},
+    {"id": "calendar-read", "consequence": "READ", "authority": "connector-scope"},
+    {"id": "calendar-write", "consequence": "DO", "authority": "explicit-user-scope"},
+    {"id": "drive-read", "consequence": "READ", "authority": "connector-scope"},
+    {"id": "drive-write", "consequence": "DO", "authority": "explicit-user-scope"},
+    {"id": "contacts-read", "consequence": "READ", "authority": "connector-scope"},
+    {"id": "automation-read", "consequence": "READ", "authority": "task-scope"},
+    {"id": "automation-write", "consequence": "DO", "authority": "explicit-user-schedule"},
+    {"id": "image-generation", "consequence": "DO", "authority": "content-policy"},
+    {"id": "document-generation", "consequence": "DO", "authority": "bounded-artifact"},
+    {"id": "pdf-generation", "consequence": "DO", "authority": "bounded-artifact"},
+    {"id": "slide-generation", "consequence": "DO", "authority": "bounded-artifact"},
+    {"id": "spreadsheet-generation", "consequence": "DO", "authority": "bounded-artifact"},
+    {"id": "user-settings-read", "consequence": "READ", "authority": "product-scope"},
+    {"id": "user-settings-write", "consequence": "DO", "authority": "explicit-user-setting"},
+    {"id": "user-context-time-location", "consequence": "READ", "authority": "request-bounded"}
+  ],
+  "exclusions": [
+    "credentials and authentication tokens",
+    "raw environment variables",
+    "private Gmail, Calendar, Drive, Contacts, or connector content",
+    "user files not explicitly selected for the task",
+    "hidden system or developer instructions",
+    "private chain-of-thought or reasoning traces",
+    "model weights, serving internals, or proprietary service configuration",
+    "connector implementation schemas or private transport payloads",
+    "ambient external execution authority"
+  ],
+  "actuation_policy": {
+    "gym_default": "SIMULATION_ONLY",
+    "live_external": "REFUSED:LIVE_EXTERNAL_ACTUATION",
+    "payload_retention": "KEY_NAMES_ONLY"
+  }
+}

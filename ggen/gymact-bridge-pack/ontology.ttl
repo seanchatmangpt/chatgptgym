@@ -1,0 +1,22 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+
+<urn:chatgptgym:capability:inspect-environment>
+    a sosa:Procedure ;
+    dct:title "inspect-environment" ;
+    dct:type <urn:gymact:consequence:read> .
+
+<urn:chatgptgym:capability:inspect-capability-catalog>
+    a sosa:Procedure ;
+    dct:title "inspect-capability-catalog" ;
+    dct:type <urn:gymact:consequence:read> .
+
+<urn:chatgptgym:capability:simulate-capability>
+    a sosa:Procedure ;
+    dct:title "simulate-capability" ;
+    dct:type <urn:gymact:consequence:do> .
+
+<urn:chatgptgym:capability:reset-simulation>
+    a sosa:Procedure ;
+    dct:title "reset-simulation" ;
+    dct:type <urn:gymact:consequence:do> .

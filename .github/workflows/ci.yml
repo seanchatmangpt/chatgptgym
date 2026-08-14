@@ -1,0 +1,44 @@
+name: ChatGPTGym exact-head court
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bounded-twin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact subject identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Install bounded verification capsule
+        run: |
+          python -m pip install pytest==9.0.2 rdflib==7.5.0
+          python -m pip install -e . --no-deps
+      - name: Execute simulation, refusal, replay and RDF courts
+        run: |
+          python -m pytest -q
+          python -m compileall -q src tests
+      - name: Refuse secret-bearing snapshot fields
+        shell: bash
+        run: |
+          ! grep -RInE '"(token|password|secret|credential|authorization|cookie)"[[:space:]]*:' environment/snapshot.json
+      - name: Record private GymAct and ggen crown boundaries
+        run: |
+          echo "BLOCKED:CROSS_REPO_PRIVATE_GYMACT_AUTHORITY"
+          echo "BLOCKED:MISSING_GGEN_EXECUTION"
+          echo "REFUSED:LIVE_EXTERNAL_ACTUATION"
